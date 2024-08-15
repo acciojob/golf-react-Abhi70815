@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component} from "react";
 import '../styles/App.css';
 
 class App extends Component {
@@ -11,10 +11,13 @@ class App extends Component {
         };
         this.renderChoice = this.renderBallOrButton.bind(this)
         this.buttonClickHandler = this.buttonClickHandler.bind(this)
+        this.handleKeyDown =this.handleKeyDown.bind(this);
     };
 
-    buttonClickHandler() {
-   
+    buttonClickHandler(e) {
+   this.setState({renderBall:true})
+   if(e.target.classList.contains === 'ball')
+   this.componentDidMount(e.target.className);
    }
     renderBallOrButton() {
 		if (this.state.renderBall) {
@@ -24,9 +27,21 @@ class App extends Component {
 		}
     }
 
+    handleKeyDown(event){
+        if(event.key ==='ArrowRight' || event.keyCode ===39){
+            console.log("right Arrow key pressed");
+            this.setState({
+                posi: this.state.posi+5,
+                ballPosition:{left:`${this.state.posi + 5}px`}
+            });
+        }
+    }
     // bind ArrowRight keydown event
     componentDidMount() {
-      
+      document.addEventListener('keydown',this.handleKeyDown)
+    }
+    componentWillUnmount(){
+        document.removeEventListener('keydown',this.handleKeyDown)
     }
 
     render() {
